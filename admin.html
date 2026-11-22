@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="/">
+<title>Admin — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A0A0B;--card:#151516;--line:#2A2A2C;--ink:#F3F3F1;--muted:#8E8E92;--lime:#C8FF1F;--lime-ink:#0A0A0B;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 Manrope,system-ui,-apple-system,"Segoe UI",sans-serif;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:44px 44px;background-attachment:fixed}
+a{color:inherit}
+button,input,textarea{font:inherit}
+.wrap{max-width:1000px;margin:0 auto;padding:22px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:26px}
+.brand{font-weight:700;text-decoration:none}
+.brand:hover{color:var(--lime)}
+.pill{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:4px 12px;color:var(--muted);font-size:.82rem;font-weight:700}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px}
+.auth{max-width:460px;margin:60px auto}
+h1{font:800 clamp(1.6rem,5vw,2.4rem)/1.1 Unbounded,sans-serif;margin:0 0 10px}
+h2{font:800 1rem/1.2 Unbounded,sans-serif;margin:0 0 16px}
+p{color:#C9C9CC;margin:0 0 16px}
+label.field{display:grid;gap:6px;margin-bottom:14px}
+label.field>span{font-size:.85rem;font-weight:700;color:var(--muted)}
+input,textarea{width:100%;background:#0F0F10;border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:11px 12px;outline:none}
+input:focus,textarea:focus{border-color:var(--lime)}
+textarea{resize:vertical;min-height:76px}
+.check{display:flex;align-items:center;gap:10px;margin:10px 0 16px;font-weight:600}
+.check input{width:18px;height:18px;accent-color:var(--lime)}
+button{cursor:pointer;border:0;border-radius:10px;padding:11px 18px;background:var(--lime);color:var(--lime-ink);font-weight:700}
+button:hover{filter:brightness(1.08)}
+button:disabled{opacity:.55;cursor:wait}
+button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+button.danger{background:transparent;color:#ff8b8b;border:1px solid #4a2626;padding:6px 10px}
+.error,.status{min-height:24px;font-size:.9rem;font-weight:700;margin:12px 0 0}
+.error{color:#ff8b8b}
+.status.ok{color:var(--lime)}
+.status.warn{color:#ffc766}
+.status.loading{color:var(--muted)}
+.hidden{display:none!important}
+.notice{border:1px solid #ffc766;background:#2a210d;border-radius:14px;padding:16px 18px;margin-bottom:20px;color:#ffe3a8}
+.notice code{background:#0A0A0B;padding:2px 6px;border-radius:4px}
+.app-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.app-head p{margin:0;color:var(--muted);font-size:.9rem}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.section{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin-top:18px}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+.hint-text{font-size:.85rem;color:var(--muted);margin:-6px 0 14px}
+.hint-text code{background:#0A0A0B;color:var(--lime);padding:2px 6px;border-radius:4px}
+.repeater-items{display:grid;gap:12px}
+.repeater-item{background:#101011;border:1px solid var(--line);border-radius:12px;padding:14px}
+.item-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.item-head strong{font-size:.9rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.save-bar{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:22px}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}.panel,.section{padding:18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="brand" href="/">← Portfolio sahifasi</a>
+    <span class="pill">Supabase admin</span>
+  </div>
+
+  <div id="setup-warning" class="notice hidden">
+    <strong>Avlash sozlanmagan.</strong> <code>portfolio-config.js</code> faylida <code>supabaseUrl</code> va <code>supabaseAnonKey</code> ni to‘ldiring, so‘ng <code>supabase-setup.sql</code> ni Supabase SQL Editor da ishga tushiring.
+  </div>
+
+  <section id="login-view" class="panel auth">
+    <h1>Admin kirish</h1>
+    <p>Portfolio tarkibini boshqarish uchun Supabase hisobingiz bilan kiring.</p>
+    <form id="login-form">
+      <label class="field"><span>Email</span><input id="email" type="email" required autocomplete="username" placeholder="admin@example.com"></label>
+      <label class="field"><span>Parol</span><input id="password" type="password" required autocomplete="current-password" placeholder="••••••••"></label>
+      <button type="submit">Kirish</button>
+      <p id="login-error" class="error" role="alert"></p>
+    </form>
+  </section>
+
+  <section id="app-view" class="hidden">
+    <header class="app-head">
+      <div>
+        <h1>Portfolio admin</h1>
+        <p id="session-email"></p>
+      </div>
+      <div class="actions">
+        <button id="reload-btn" type="button" class="ghost">Qayta yuklash</button>
+        <button id="logout-btn" type="button" class="ghost">Chiqish</button>
+      </div>
+    </header>
+    <div id="status" class="status" role="status"></div>
+    <form id="content-form">
+      <div id="form-fields"></div>
+      <div class="save-bar">
+        <button id="reset-btn" type="button" class="ghost">Standartga qaytarish</button>
+        <button id="save-btn" type="submit">Saqlash</button>
+      </div>
+    </form>
+  </section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="portfolio-config.js"></script>
+<script src="portfolio-config.local.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
